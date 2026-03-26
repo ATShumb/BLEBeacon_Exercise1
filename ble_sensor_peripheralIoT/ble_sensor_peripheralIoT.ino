@@ -1,6 +1,6 @@
 #include <ArduinoBLE.h>
 
-#define DEVICE_NAME        "BLE-EnvSensor-IoT2"
+#define DEVICE_NAME        "BLE-EnvSensor-IoT"
 #define UPDATE_INTERVAL_MS 500
 #define SERIAL_BAUD        115200
 
