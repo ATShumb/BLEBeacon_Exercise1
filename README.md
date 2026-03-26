@@ -1,6 +1,6 @@
 # BLEBeacon_Exercise1
 
-## Example Eddystone BLE URL beacon advertising
+## From Example Eddystone BLE URL beacon advertising
 
 
 
@@ -21,6 +21,7 @@ An end-to-end Bluetooth Low Energy system where an **Arduino Nano BLE 33** acts 
 │  └─ Control     (WRITE)     │                              │                              │
 └─────────────────────────────┘                              └──────────────────────────────┘
 ```
+**Clone the repo to follow the exercise**
 
 ## Part 1 — Arduino setup
 
@@ -39,8 +40,9 @@ An end-to-end Bluetooth Low Energy system where an **Arduino Nano BLE 33** acts 
 
 ### Step 1.3 — Open the sketch
 
-1. Open `arduino/ble_sensor_peripheral.ino` in Arduino IDE.
+1. Open `ble_sensor_peripheral/ble_sensor_peripheral.ino` in Arduino IDE (if using Arduino Nano33 BLE).
 2. Read through the comments at the top — they explain each BLE concept as it appears in the code.
+   > **Tip:** use `ble_sensor_peripheralIoT/ble_sensor_peripheralIoT.ino` if using Arduino Nano IoT device
 
 ### Step 1.4 — Flash the Arduino
 
