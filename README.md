@@ -1,3 +1,5 @@
+*IDA Lab — Università del Salento — Internet of Things A.A. 2025/2026*
+
 # BLEBeacon_Exercise1
 
 ## From Example Eddystone BLE URL beacon advertising
