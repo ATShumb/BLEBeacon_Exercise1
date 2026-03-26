@@ -199,6 +199,112 @@ df.set_index("iso_time", inplace=True)
 df[["temperature_C", "humidity_pct"]].plot()
 plt.show()
 ```
+
+## Part 5 — Deep Dive Tasks
+
+Work through these tasks in order. Each one builds on the concepts from the lecture.
+
+---
+
+### Task A — Observe the GATT attribute table
+
+> **Goal:** Understand how a GATT service maps to handles and descriptors.
+
+1. Run the Python script and read the printed attribute table.
+2. Identify which handle corresponds to which characteristic UUID.
+3. Find the CCCD descriptors (UUID `00002902-0000-1000-8000-00805f9b34fb`).
+4. **Question:** Why does the Control characteristic (WRITE-only) not have a CCCD descriptor?
+
+---
+
+### Task B — Pause and resume streaming
+
+> **Goal:** Demonstrate a GATT WRITE operation from Python to Arduino.
+
+1. While the script is running and the plot is live, switch to the terminal window.
+2. Type `p` and press **Enter**.
+3. Observe that the Arduino Serial Monitor prints `[CTRL] Streaming PAUSED` and the plot stops updating.
+4. Type `r` and press **Enter** to resume.
+5. **Explain** what byte value was written to which characteristic handle, and how the Arduino's `controlChar.written()` check in `loop()` detected it.
+
+---
+### Task C — Modify the advertising interval
+
+> **Goal:** Understand the trade-off between advertising frequency and power.
+
+1. In the Arduino sketch, find the `BLE.advertise()` call.
+2. Add `BLE.setAdvertisingInterval(160);` before it (160 × 0.625 ms = 100 ms).
+3. Reflash and observe on nRF Connect for Mobile how quickly the device appears in the scan list.
+4. Change the interval to `1600` (1000 ms) and repeat.
+5. **Question:** What is the impact on battery life? What is the minimum interval allowed by the BLE spec?
+
+---
+
+### Task D — Change the notification rate
+
+> **Goal:** Relate `UPDATE_INTERVAL_MS` to connection events and data freshness.
+
+1. In the Arduino sketch, change `UPDATE_INTERVAL_MS` from `500` to `100`.
+2. Reflash, reconnect, and observe the plot refresh rate and the CSV density.
+3. Change it to `2000` and observe again.
+4. **Question:** How does the notification rate relate to the connection interval negotiated during `CONNECT_REQ`? (Hint: see lecture slide 43.)
+
+---
+
+### Task E — Add a fourth characteristic (challenge)
+
+> **Goal:** Extend the GATT service with a new characteristic.
+
+1. In the Arduino sketch, add a **Battery Level** characteristic:
+   - UUID: `19B10005-E8F2-537E-4F6C-D104768A1214`
+   - Properties: `BLERead | BLENotify`
+   - Data: 1 byte, simulated percentage 0–100 (decrements over time)
+2. Add a corresponding notification callback in the Python script.
+3. Add a fourth subplot to the matplotlib figure.
+4. **Stretch goal:** Use the standard Battery Service UUID `0x180F` and standard Battery Level characteristic UUID `0x2A19` instead, and verify that nRF Connect for Mobile displays it with the battery icon.
+
+---
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| `Device not found within 10 s` | Arduino not advertising | Check Serial Monitor shows `[BLE] Advertising started` |
+| `Device not found within 10 s` | Bluetooth disabled on PC | Enable Bluetooth in OS settings |
+| `org.bluez.Error.NotPermitted` (Linux) | BlueZ permissions | Run `sudo python ble_sensor_client.py` or add user to `bluetooth` group |
+| Plot window opens but never updates | Bleak thread not starting | Check that `bleak` and `matplotlib` are both installed in the same Python environment |
+| `AttributeError: 'NoneType' has no attribute 'is_connected'` | Keypress before connection | Wait for `[GATT] Subscribed` message before typing `p` / `r` |
+| Arduino uploads but Serial shows nothing | Wrong baud rate | Set Serial Monitor to 115200 |
+| Arduino not recognised by IDE | Missing board package | Re-run Boards Manager install step | Cable had no data lines
+| Values stop updating on plot but Arduino keeps printing | CCCD was not written | Disconnect and reconnect; check `start_notify` did not throw an exception |
+
+---
+
+## Custom UUIDs reference
+
+| Resource | UUID |
+|----------|------|
+| Environmental Sensor Service | `19B10000-E8F2-537E-4F6C-D104768A1214` |
+| Temperature characteristic | `19B10001-E8F2-537E-4F6C-D104768A1214` |
+| Humidity characteristic | `19B10002-E8F2-537E-4F6C-D104768A1214` |
+| Light Level characteristic | `19B10003-E8F2-537E-4F6C-D104768A1214` |
+| Control characteristic | `19B10004-E8F2-537E-4F6C-D104768A1214` |
+
+> These UUIDs were randomly generated for this exercise. In a production device you would generate your own using `uuidgen` (macOS/Linux) or an online UUID generator.
+
+---
+
+## Data encoding reference
+
+| Characteristic | Type | Size | Encoding |
+|---------------|------|------|----------|
+| Temperature | float32 | 4 bytes | IEEE 754 single precision, little-endian |
+| Humidity | float32 | 4 bytes | IEEE 754 single precision, little-endian |
+| Light Level | uint16 | 2 bytes | Unsigned integer, little-endian |
+| Control | uint8 | 1 byte | `0x00` = pause, `0x01` = resume |
+
+---
+
 ## Further reading
 
 - ArduinoBLE library reference: <https://www.arduino.cc/reference/en/libraries/arduinoble/>
@@ -207,3 +313,4 @@ plt.show()
 - Assigned Numbers (standard UUIDs): <https://www.bluetooth.com/specifications/assigned-numbers>
 - nRF Connect for Mobile: <https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-Mobile>
 
+*IDA Lab — Università del Salento — Internet of Things A.A. 2025/2026*
