@@ -70,7 +70,7 @@ An end-to-end Bluetooth Low Energy system where an **Arduino Nano BLE 33** acts 
 Before moving to Python, confirm the peripheral is advertising correctly using **nRF Connect for Mobile**:
 
 1. Open the app and tap **Scan**.
-2. Find **BLE-EnvSensor** in the list (__this name might be different on your device__).
+2. Find **BLE-EnvSensor** in the list (*_this name might be different on your device_*).
 3. Note the RSSI value and the advertised service UUID.
 4. Tap **Connect**, then expand the service `19B10000...`.
 5. Tap the **↓** (notify) button on the Temperature characteristic.
@@ -159,7 +159,7 @@ A plot window will open showing three rolling charts updating in real time.
 
 ### Step 3.2 — Connect by address (faster reconnect)
 
-Copy the address printed in the first run and use it directly (*addresses shown here are just examples):
+Copy the address printed in the first run and use it directly (*_addresses shown here are just examples_*):
 
 ```bash
 # macOS
