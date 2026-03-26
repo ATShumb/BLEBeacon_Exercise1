@@ -159,7 +159,7 @@ A plot window will open showing three rolling charts updating in real time.
 
 ### Step 3.2 — Connect by address (faster reconnect)
 
-Copy the address printed in the first run and use it directly:
+Copy the address printed in the first run and use it directly (*addresses shown here are just examples):
 
 ```bash
 # macOS
