@@ -5,8 +5,11 @@
 ## From Example Eddystone BLE URL beacon advertising
 
 
-# BLE Classroom_Exercise2
+# BLE Environmental Sensor — Step-by-Step Exercise
 
+> **Course:** Internet of Things — A.A. 2025/2026  
+> **Hardware:** Arduino Nano BLE 33 · PC with Bluetooth  
+---
 An end-to-end Bluetooth Low Energy system where an **Arduino Nano BLE 33** acts as a GATT **peripheral** (server) broadcasting simulated environmental sensor data, and a **Python script** on your PC acts as a GATT **central** (client) that subscribes to notifications, plots three sensor channels in real time, and logs all data to a CSV file.
 
 ```
