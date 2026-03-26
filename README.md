@@ -1,3 +1,3 @@
 # BLEBeacon_Exercise1
 
-##Example Eddystone BLE URL beacon advertising
+## Example Eddystone BLE URL beacon advertising
