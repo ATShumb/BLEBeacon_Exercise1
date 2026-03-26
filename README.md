@@ -68,7 +68,7 @@ An end-to-end Bluetooth Low Energy system where an **Arduino Nano BLE 33** acts 
 Before moving to Python, confirm the peripheral is advertising correctly using **nRF Connect for Mobile**:
 
 1. Open the app and tap **Scan**.
-2. Find **BLE-EnvSensor** in the list.
+2. Find **BLE-EnvSensor** in the list (__this name might be different on your device__).
 3. Note the RSSI value and the advertised service UUID.
 4. Tap **Connect**, then expand the service `19B10000...`.
 5. Tap the **↓** (notify) button on the Temperature characteristic.
@@ -88,7 +88,7 @@ python --version
 ### Step 2.2 — Install dependencies
 
 ```bash
-cd python/
+#cd to your python environment 
 pip install -r requirements.txt
 ```
 
@@ -108,7 +108,7 @@ python -c "import bleak; print(bleak.__version__)"
 
 ### Step 2.4 — Read through the Python script
 
-Open `python/ble_sensor_client.py` and trace through the four main sections:
+Open `ble_sensor_client.py` and trace through the four main sections:
 
 1. **`find_device()`** — uses `BleakScanner` (GAP Observer role) to find the Arduino by service UUID or device name.
 2. **`run_ble()`** — connects (`BleakClient`), prints the full GATT attribute table, calls `start_notify()` on three characteristics (which writes 0x0001 to each CCCD), then loops while connected.
